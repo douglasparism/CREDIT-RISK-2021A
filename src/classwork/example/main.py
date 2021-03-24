@@ -7,4 +7,4 @@ class Main:
 
     @staticmethod
     def reverse(string: str):
-        return string [::-1]
+        return string[::-1]
