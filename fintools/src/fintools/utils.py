@@ -21,6 +21,7 @@ def timeit(logger):
         return wrapper
     return decorator
 
+
 def caching(func):
     cache = {}
 
