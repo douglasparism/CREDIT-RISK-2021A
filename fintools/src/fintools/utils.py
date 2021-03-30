@@ -20,3 +20,15 @@ def timeit(logger):
             return output
         return wrapper
     return decorator
+
+def caching(func):
+    cache = {}
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        key = hash(frozenset(list(args) + list(kwargs.items())))
+        if key in cache:
+            return cache[key]
+        cache[key] = func(*args, **kwargs)
+        return wrapper(*args, **kwargs)
+    return wrapper
