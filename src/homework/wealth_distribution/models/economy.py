@@ -24,6 +24,7 @@ class Economy:
             population: int,
             initial_amount: float,
             trading_sample: float,
+            trading_amount: int = 1,
             sessions_per_epoch: int = 100,
             disable_epoch_history: bool = False,
             include_sessions: bool = False,
@@ -34,6 +35,7 @@ class Economy:
         self.sessions_per_epoch = sessions_per_epoch
         self.initial_amount = initial_amount
         self.trading_sample = trading_sample
+        self.trading_amount = trading_amount
         self.population = population
         self.agents = [
             Agent(money=self.initial_amount)
@@ -113,7 +115,7 @@ class Economy:
         sample_size = int(self.population * self.trading_sample)
         trading_agents = random.sample(self.agents, k=sample_size)
         for agent_a, agent_b in itertools.combinations(trading_agents, 2):
-            agent_a.trade(agent_b)
+            agent_a.trade(agent_b, self.trading_amount)
         self._snapshot(source=self.SOURCE_SESSION)
 
     def plot_histogram(self, **hist_kwargs) -> Figure:

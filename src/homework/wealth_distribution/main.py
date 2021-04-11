@@ -51,7 +51,15 @@ class Main:
             return location
 
     def histogram(self, key: str, show: bool = False, save: bool = False):
-        pass
+        economy = self._get_economy_from_filename(filename=key)
+        figure = economy.plot_histogram()
+        if show:
+            plt.show()
+        if save:
+            random_filename = f"{uuid.uuid4()}.png"
+            location = os.path.join(WEALTH_DISTR_PLOTS_PATH, random_filename)
+            figure.savefig(location)
+            return location
 
     @staticmethod
     def simulate(
@@ -59,6 +67,7 @@ class Main:
             epochs: int = 100,
             initial_amount: float = 1000,
             trading_sample: float = 0.5,
+            trading_amount: int = 1,
             filename: Optional[str] = None
     ):
         if not filename:
@@ -70,6 +79,7 @@ class Main:
             population=population,
             initial_amount=initial_amount,
             trading_sample=trading_sample,
+            trading_amount=trading_amount,
             include_sessions=True
         )
         economy.epochs(n=epochs)
