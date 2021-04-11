@@ -1,6 +1,6 @@
 import random
 import uuid
-from typing import Dict, Optional
+from typing import Dict, Optional, Any, Union
 
 
 class Agent:
@@ -12,12 +12,22 @@ class Agent:
         self.money = money
 
     def win(self, amount: int = 1):
+        self.money = self.money + amount
         pass
 
     def lose(self, amount: int = 1):
+        self.money = self.money - amount
         pass
 
     def trade(self, other: 'Agent', amount: int = 1):
+        r = random.random()
+        if r > 0.5 and other.money >= amount:
+            self.money = self.money + amount
+            other.money = other.money - amount
+
+        if r <= 0.5 and self.money >= amount:
+            self.money = self.money - amount
+            other.money = other.money + amount
         pass
 
     def to_dict(self) -> Dict:
