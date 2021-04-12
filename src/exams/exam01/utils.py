@@ -25,4 +25,19 @@ def display(target: Dict):
 
 
 def flat_dictionary(target):
-    pass
+    flat = {}
+
+    def flatten(x, name=''):
+        if type(x) is dict:
+            for element in x:
+                flatten(x[element], name + element + '_')
+        elif type(x) is list:
+            i = 0
+            for element in x:
+                flatten(element, name + str(i) + '_')
+                i += 1
+        else:
+            flat[name[:-1]] = x
+
+    flatten(target)
+    return flat
